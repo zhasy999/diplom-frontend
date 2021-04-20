@@ -7,11 +7,14 @@ import AuthService from "./services/auth.service";
 
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
+import Test from './components/Test'
+import About from "./pages/About";
+import Logo from './logo.svg'
 
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -34,20 +37,21 @@ const App = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <Link to={"/"} className="navbar-brand">
-          CAT system
+      <nav className="main-nav">
+        <Link to={"/"} className="logo" >
+          <img src={Logo} width={30} className="mr-1" />
+          Adaptive Testing
         </Link>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to={"/home"} className="nav-link">
+            <Link to={"/home"} className="">
               Home
             </Link>
           </li>
 
           {showModeratorBoard && (
             <li className="nav-item">
-              <Link to={"/mod"} className="nav-link">
+              <Link to={"/mod"} className="  ">
                 Moderator Board
               </Link>
             </li>
@@ -55,44 +59,54 @@ const App = () => {
 
           {showAdminBoard && (
             <li className="nav-item">
-              <Link to={"/admin"} className="nav-link">
+              <Link to={"/admin"} className="  ">
                 Admin Board
               </Link>
             </li>
           )}
 
           {currentUser && (
-            <li className="nav-item">
-              <Link to={"/user"} className="nav-link">
-                User
+            <>
+              <li className="">
+                <Link to={"/user"} className="">
+                  User
               </Link>
-            </li>
+              </li>
+              <li className=""> <Link to={"/test"} className="">
+                Test
+             </Link></li>
+              <li className="">   <Link to={"/about"} className="">
+                About
+              </Link></li>
+            </>
           )}
         </div>
 
         {currentUser ? (
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link to={"/profile"} className="nav-link">
+              <Link to={"/profile"} className="  ">
                 {currentUser.username}
               </Link>
             </li>
             <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={logOut}>
-                LogOut
+              <button className="btn btn-primary">
+                <a href="/login" className="  " onClick={logOut}>
+                  Logout
               </a>
+              </button>
             </li>
           </div>
         ) : (
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link to={"/login"} className="nav-link">
+              <Link to={"/login"} className="  ">
                 Login
               </Link>
             </li>
 
             <li className="nav-item">
-              <Link to={"/register"} className="nav-link">
+              <Link to={"/register"} className="  ">
                 Sign Up
               </Link>
             </li>
@@ -107,6 +121,8 @@ const App = () => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
           <Route path="/user" component={BoardUser} />
+          <Route path="/test" component={Test} />
+          <Route path="/about" component={About} />
           <Route path="/mod" component={BoardModerator} />
           <Route path="/admin" component={BoardAdmin} />
         </Switch>

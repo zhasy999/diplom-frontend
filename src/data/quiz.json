@@ -1,0 +1,29 @@
+{
+    "data": [
+      {
+        "question": "What is the capital of Kazakhstan ?",
+        "choices": ["Shymkent", "Nur-Sultan", "Almaty", "Karagandy"],
+        "answer": "Almaty"
+      },
+      {
+        "question": "2 + 2 = ?",
+        "choices": ["2", "22", "5", "4"],
+        "answer": "4"
+      },
+      {
+        "question": "Assembly line operation is also called as ?",
+        "choices": ["Superscalar operation", "Pipelining process", "Von Neumann cycle", "None of the mentioned"],
+        "answer": "Pipelining process"
+      },
+      {
+        "question": "Of the following, identify the memory usually written by the manufacturer ?",
+        "choices": ["RAM", "DRAM", "SRAM", "ROM"],
+        "answer": "ROM"
+      },
+      {
+        "question": "Choose the right formula of AMAT ?",
+        "choices": ["Average Memory Access time = Hit Time + Miss Rate * Miss penalty", "Average Memory Access time = Hit Rate + Miss Rate * Miss penalty", "Average Memory Access time = Hit Time + Miss time * Miss penalty", "Average Memory Access time = Hit Rate + Miss time * Miss penalty"],
+        "answer": "Average Memory Access time = Hit Rate + Miss Rate * Miss penalty"
+      }
+    ]
+  }

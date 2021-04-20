@@ -1,3 +1,7 @@
+body{
+  background: #101522;
+  min-height: 100vh;
+}
 label {
   display: block;
   margin-top: 10px;
@@ -29,4 +33,89 @@ label {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
+}
+
+.Home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.Home .card {
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+label.radio {
+  display: block;
+  text-align: left;
+  padding: 15px;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+label.radio+.radio {
+  margin-left: 0;
+}
+
+label.radio input {
+  margin-right: 10px;
+}
+
+/* test */ 
+
+.main-nav{
+  background: #101522;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+.main-nav{
+  padding: 0 100px
+}
+.main-nav .navbar-nav{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.main-nav .navbar-nav li{
+  margin: 0 10px;
+
+}
+.main-nav .navbar-nav li a{
+  color: #fff;
+}
+.main-nav .logo{
+  color: #fff;
+  justify-self: flex-start;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.container .param{
+  color: white;
+}
+
+.container .profile_p{
+  color: white;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.container ul{
+  color: #fff;
+}
+.container h1{
+ font-size: 200%;
 }
