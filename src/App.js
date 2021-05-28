@@ -49,10 +49,10 @@ const App = () => {
             </Link>
           </li>
 
-          {showModeratorBoard && (
+          {/* {showModeratorBoard && (
             <li className="nav-item">
               <Link to={"/mod"} className="  ">
-                Moderator Board
+                Moderator
               </Link>
             </li>
           )}
@@ -60,16 +60,16 @@ const App = () => {
           {showAdminBoard && (
             <li className="nav-item">
               <Link to={"/admin"} className="  ">
-                Admin Board
+                Admin
               </Link>
             </li>
-          )}
+          )} */}
 
           {currentUser && (
             <>
               <li className="">
                 <Link to={"/user"} className="">
-                  User
+                Admin
               </Link>
               </li>
               <li className=""> <Link to={"/test"} className="">

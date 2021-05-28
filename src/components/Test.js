@@ -5,16 +5,51 @@ import End from './test/End';
 import Modal from './test/Modal';
 import quizData from '../data/quiz.json';
 import UserService from "../services/user.service";
-// import './App.css';
+import { useAsyncState } from "../hooks/useAsyncState"
+import axios from "axios";
+import authHeader from "../services/auth-header";
+import { ThemeProvider } from "styled-components";
+const API_URL = "http://localhost:8080/api/test/";
 
 let interval;
 const Home = () => {
   const [content, setContent] = useState("");
   const [step, setStep] = useState(1);
-  const [activeQuestion, setActiveQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [time, setTime] = useState(0);
+  const [topics, setTopics] = useState([]);
+  const [level, setLevel] = useState(null);
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [winStreak, setWinStreak] = useAsyncState(0);
+  const [questionCounter, setQuestionCounter] = useAsyncState(0);
+  const [startLevel, setStartLevel] = useState(null);
+
+
+  function getTopics() {
+    axios.get("http://localhost:8080/api/test/topics").then(res => (setTopics(res.data)));
+  }
+  function getQuestion() {
+    axios.get(`http://localhost:8080/api/test/question?topicId=${level}`).then(res => {
+      axios.get(`http://localhost:8080/api/test/options?questionId=${res.data.id}`).then(res1 => {
+        const question = {
+          id: res.data.id,
+          description: res.data.description,
+          options: res1.data
+        }
+        setQuestions([...questions, question])
+        setCurrentQuestion(question)
+      }).catch(err => {
+        console.log(1, err);
+        // setStep(3)
+      })
+    }).catch(err => {
+      console.log(2, err);
+      setStep(3)
+    })
+  }
+  // console.log(winStreak);
   useEffect(() => {
     UserService.getPublicContent().then(
       (response) => {
@@ -25,11 +60,45 @@ const Home = () => {
           (error.response && error.response.data) ||
           error.message ||
           error.toString();
-
         setContent(_content);
       }
     );
+    getTopics();
+
   }, []);
+
+  useEffect(() => {
+    if (topics.length > 0) {
+      const level = Math.round(topics.length / 2)
+      setLevel(level)
+      if (!startLevel) {
+        setStartLevel(level)
+      }
+
+    }
+  }, [topics])
+
+  // useEffect(() => {
+  //   if (level) {
+  //     getQuestion()
+  //   }
+  // }, [level, questionCounter])
+
+  useEffect(() => {
+    if (level && level === startLevel) {
+      getQuestion()
+    }
+    if (level === 7 || level === 0) {
+      setStep(3)
+    }
+  }, [level])
+
+
+  useEffect(() => {
+    if (level && questionCounter !== -2 && questionCounter !== 3) {
+      getQuestion()
+    }
+  }, [questionCounter])
 
   useEffect(() => {
     if (step === 3) {
@@ -45,45 +114,39 @@ const Home = () => {
   }
 
   const resetClickHandler = () => {
-    setActiveQuestion(0);
-    setAnswers([]);
-    setStep(2);
-    setTime(0);
-    interval = setInterval(() => {
-      setTime(prevTime => prevTime + 1);
-    }, 1000);
+    window.location.reload()
   }
-
-
-
   return (
     <div className="container">
       <header className="jumbotron">
-        <h3>{content}</h3>
+        <h1 className="bigh1">{content}</h1>
       </header>
       <body>
         {step === 1 && <Start onQuizStart={quizStartHandler} />}
         {step === 2 && <Question
-          data={quizData.data[activeQuestion]}
+          data={currentQuestion}
           onAnswerUpdate={setAnswers}
-          numberOfQuestions={quizData.data.length}
-          activeQuestion={activeQuestion}
-          onSetActiveQuestion={setActiveQuestion}
+          winStreak={winStreak}
           onSetStep={setStep}
+          setWinStreak={setWinStreak}
+          time={time}
+          setTime={setTime}
+          level={level}
+          setLevel={setLevel}
+          questionCounter={questionCounter}
+          setQuestionCounter={setQuestionCounter}
+          startLevel={startLevel}
         />}
         {step === 3 && <End
           results={answers}
-          data={quizData.data}
+          data={questions}
           onReset={resetClickHandler}
           onAnswersCheck={() => setShowModal(true)}
-          time={time}
         />}
-
-
         {showModal && <Modal
           onClose={() => setShowModal(false)}
           results={answers}
-          data={quizData.data}
+          data={questions}
         />}
       </body>
     </div>

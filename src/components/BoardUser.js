@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import UserService from "../services/user.service";
-
 const BoardUser = () => {
   const [content, setContent] = useState("");
 
@@ -21,12 +20,14 @@ const BoardUser = () => {
         setContent(_content);
       }
     );
+
+    console.log(UserService.getTopics());
   }, []);
 
   return (
     <div className="container">
       <header className="jumbotron">
-        <h3>{content}</h3>
+        <h3 className="bigh1">{content}</h3>
       </header>
     </div>
   );

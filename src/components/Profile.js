@@ -6,7 +6,7 @@ const Profile = () => {
   return (
     <div className="container">
       <header className="jumbotron">
-        <h1>
+        <h1 className="bigh1">
         Profile: <strong>{currentUser.username}</strong> 
         </h1>
       </header>
