@@ -25,6 +25,10 @@ const Home = () => {
   const [winStreak, setWinStreak] = useAsyncState(0);
   const [questionCounter, setQuestionCounter] = useAsyncState(0);
   const [startLevel, setStartLevel] = useState(null);
+  const [fullTime, setFullTime] = useState(0);
+  const [levelsList, setLevelsList] = useState([4]);
+  const [up, setUp] = useState(7);
+  const [down, setDown] = useState(1);
 
 
   function getTopics() {
@@ -73,6 +77,7 @@ const Home = () => {
       setLevel(level)
       if (!startLevel) {
         setStartLevel(level)
+        setLevelsList(prevState => [...prevState, level])
       }
 
     }
@@ -88,7 +93,8 @@ const Home = () => {
     if (level && level === startLevel) {
       getQuestion()
     }
-    if (level === 7 || level === 0) {
+    if (level === 8 || level === 0) {
+      console.log(level);
       setStep(3)
     }
   }, [level])
@@ -110,6 +116,7 @@ const Home = () => {
     setStep(2);
     interval = setInterval(() => {
       setTime(prevTime => prevTime + 1);
+      setFullTime(prevTime => prevTime + 1)
     }, 1000);
   }
 
@@ -136,12 +143,21 @@ const Home = () => {
           questionCounter={questionCounter}
           setQuestionCounter={setQuestionCounter}
           startLevel={startLevel}
+          up={up}
+          setUp={setUp}
+          down={down}
+          setDown={setDown}
+          setLevelsList={setLevelsList}
+          levelsList={levelsList}
         />}
         {step === 3 && <End
           results={answers}
           data={questions}
           onReset={resetClickHandler}
           onAnswersCheck={() => setShowModal(true)}
+          fullTime={fullTime}
+          level={level}
+          levels={topics.length}
         />}
         {showModal && <Modal
           onClose={() => setShowModal(false)}

@@ -21,7 +21,6 @@ const BoardUser = () => {
       }
     );
 
-    console.log(UserService.getTopics());
   }, []);
 
   return (
